@@ -2,6 +2,10 @@ require "json"
 
 input = ARGF.read
 
+puts "====="
+puts ENV.inspect
+puts "====="
+
 if input == ""
   $stderr.puts "Empty input"
 else
