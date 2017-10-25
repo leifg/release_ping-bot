@@ -1,2 +1,7 @@
 puts ARGV.inspect
-puts ARGF.read
+
+puts "whatever is going on"
+
+input = ARGF.read
+
+puts "Output the input: ##{input}#"
