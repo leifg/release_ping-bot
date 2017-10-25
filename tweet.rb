@@ -1,15 +1,26 @@
 require "json"
+require "openssl"
+require "base64"
 
-input = ARGF.read
+data = ARGF.read.strip
 
-puts "====="
-puts ENV["WEBHOOK_SECRET"]
-puts ENV["x_rp_webhook_signature"]
-puts "====="
-
-if input == ""
-else
-  payload = JSON.parse(input, symbolize_names: true)
-
-  twitter_message = "#{payload[:software][:name]} #{payload[:version_string]} released: #{payload[:release_notes_url]}"
+if data == ""
+  $stderr.puts "Empty Payload"
+  return
 end
+
+type, signature = ENV["x_rp_webhook_signature"].split("=")
+secret = ENV["WEBHOOK_SECRET"]
+digest = OpenSSL::Digest.new(type)
+
+local_signature = OpenSSL::HMAC.hexdigest(digest, secret, data)
+
+if local_signature != signature
+  $stderr.puts "Signature mismatch"
+  return
+end
+
+payload = JSON.parse(data, symbolize_names: true)
+twitter_message = "#{payload[:software][:name]} #{payload[:version_string]} released: #{payload[:release_notes_url]}"
+
+puts "I tweet: #{twitter_message}"
