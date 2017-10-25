@@ -2,12 +2,9 @@ require "json"
 
 input = ARGF.read
 
-ENV.each do |key, value|
-  puts "#{key}=#{value}"
-end
-
 puts "====="
 puts ENV["WEBHOOK_SECRET"]
+puts ENV["x_rp_webhook_signature"]
 puts "====="
 
 if input == ""
