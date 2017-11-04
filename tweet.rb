@@ -17,7 +17,7 @@ local_signature = OpenSSL::HMAC.hexdigest(digest, secret, data)
 
 if local_signature != signature
   $stderr.puts "Signature mismatch"
-  return
+  return 1
 end
 
 payload = JSON.parse(data, symbolize_names: true)
