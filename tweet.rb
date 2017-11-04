@@ -23,7 +23,6 @@ end
 payload = JSON.parse(data, symbolize_names: true)
 version_info = payload[:version_info]
 base_version = "#{version_info[:major]}.#{version_info[:minor]}.#{version_info[:patch]}"
-display_version = version_info[:pre_release] ? "#{base_version}-#{version_info[:pre_release]}" : base_version
-twitter_message = "#{payload[:software][:name]} #{display_version} released: #{payload[:release_notes_url]}"
+twitter_message = "#{payload[:software][:name]} #{payload[:display_version]} released: #{payload[:release_notes_url]}"
 
 puts "I tweet: #{twitter_message}"
