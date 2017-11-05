@@ -8,10 +8,6 @@ if data == ""
   return 1
 end
 
-$stdout.puts "====="
-$stdout.puts data.inspect
-$stdout.puts "====="
-
 type, signature = ENV["x_rp_webhook_signature"].split("=")
 secret = ENV["WEBHOOK_SECRET"]
 digest = OpenSSL::Digest.new(type)
