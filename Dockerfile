@@ -8,7 +8,11 @@ WORKDIR /usr/src/app
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
-RUN bundle install
+
+RUN apk add --no-cache --virtual .gem-builddeps \
+      build-base \
+    && bundle install \
+    && apk del .gem-builddeps
 
 COPY . /usr/src/app
 
